@@ -16,7 +16,7 @@ def logWrite(outputWrite, data):
 	if not os.path.exists('../logs'):
 		os.makedirs('../logs')
 	logFile = open('../logs/' + currentName + '.log', 'a')
-	logFile.write(strftime('\n[%x %X]: Wrote to file ' + currentName + '.txt: ' + (data)))
+	logFile.write(strftime('[%x %X]: Wrote to file ' + currentName + '.txt: ' + (data) + "\n"))
 	logFile.close()	
 
 def execAll():
@@ -37,5 +37,8 @@ def execScr(f):
 def main():
 	execAll()
 	
-if __name__ == "__main__":
-        main()
+try:
+	if __name__ == "__main__":
+		main()
+except:
+    print "Unexpected error:", sys.exc_info()[0]
