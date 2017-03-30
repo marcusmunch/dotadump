@@ -1,4 +1,4 @@
-#!usr/bin/python
+#!/usr/bin/python
 #import modules
 import os, subprocess, sys, inspect
 from time import localtime, strftime
