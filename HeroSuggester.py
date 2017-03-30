@@ -2,12 +2,10 @@ import requests, json, time
 from random import randint
 
 """ TO DO:
-
 -Correct API missing hero with id 24
-
 """
 
-id = open("config.cfg", 'r').read()
+id = open("./config.cfg", 'r').read()
 
 def topHeroes(limit=25):
 	global Heroes
