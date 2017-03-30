@@ -1,3 +1,4 @@
+#!/bin/user/python
 import requests, json, time
 from random import randint
 
