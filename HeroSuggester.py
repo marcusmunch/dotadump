@@ -2,7 +2,9 @@
 import requests, json, time
 from random import randint
 
-id = open("./config.cfg", 'r').read()
+def loadData():
+	global id
+	id = json.loads(open("config.ini", "r").read())["steam32id"]
 
 def topHeroes(limit=25):
 	global Heroes
@@ -49,14 +51,17 @@ def noRecent(minmatches, days=60):
 def WhatToPlay(suggestion_num=1):
 	if suggestion_num <= 0: print "You specifically asked for no (or less than zero) suggestions!"
 	else:
-		print "I think you should play one of the following heroes:"
+		leader = (str(suggestion_num) + ' hero challenge for ' + time.strftime("%d/%m-%Y") + ': ')
 		suggestions = 0
+		challenge = []
 		while suggestions < suggestion_num and len(HeroNames) > 0:
 			rng = randint(0,len(HeroNames)) -1
-			print HeroNames[rng]
+			challenge.append(HeroNames[rng])
 			HeroNames.remove(HeroNames[rng])
 			suggestions += 1
+		print (leader + ', '.join(challenge))
 
 if __name__ == "__main__":
-	noRecent(10, 30)
-	WhatToPlay(5)
+	loadData()
+	noRecent(11, 42)
+	print WhatToPlay(3)

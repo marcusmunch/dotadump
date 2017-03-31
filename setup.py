@@ -7,11 +7,11 @@ def compileOutput():
     if 'FTPaddr' in globals():
         output['FTP_address'] = FTPaddr
         output['FTP_password'] = FTPpass
-    if 'openID' in globals():
-        output['opendotaID'] = openID
+    if 'steamID' in globals():
+        output['steam32id'] = steamID
     if output != {}:
         file = open("config.ini", 'w')
-        file.write( str(output) )
+        file.write(json.dumps(output))
         file.close()
     else:
         if os.path.isfile('config.ini'):
@@ -43,8 +43,8 @@ def promptID():
         else: print "Input not accepted, try again"
         resp2 = raw_input ("Enter Steam32 ID: ")
         if resp2.isdigit():
-            global openID
-            openID = resp2
+            global steamID
+            steamID = resp2
             break
         else: print "Input is not all digits. Try again"
 
