@@ -3,7 +3,9 @@ import requests, json, time
 from random import randint
 
 """ TO DO:
--Correct API missing hero with id 24
+-Move API fix from topHeroes() to identifyHeroes()
+-Print output in one line for better use with AnkhBot
+-Upload output to server (maybe separate script for privacy reasons)
 """
 
 id = open("./config.cfg", 'r').read()
@@ -62,5 +64,5 @@ def WhatToPlay(suggestion_num=1):
 			suggestions += 1
 
 if __name__ == "__main__":
-	noRecent(15, 100)
+	noRecent(10, 30)
 	WhatToPlay(5)
