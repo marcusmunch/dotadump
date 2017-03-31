@@ -2,12 +2,6 @@
 import requests, json, time
 from random import randint
 
-""" TO DO:
--Move API fix from topHeroes() to identifyHeroes()
--Print output in one line for better use with AnkhBot
--Upload output to server (maybe separate script for privacy reasons)
-"""
-
 id = open("./config.cfg", 'r').read()
 
 def topHeroes(limit=25):
