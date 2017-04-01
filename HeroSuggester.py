@@ -27,15 +27,17 @@ def outsidetopHeroes(outside=10, limit=30):
 def identifyHeroes(toIdentify=""):
 	global HeroNames
 	HeroNames = []
+	print "Converting found Hero ID's to localized names..."
 	r = requests.get('https://api.opendota.com/api/heroes')
 	data = json.loads(r.text)
 	for i in range(0, len(toIdentify)):
 		lookup = int(toIdentify[i])
 		HeroNames.append(data[lookup]['localized_name'])
 
-def noRecent(minmatches, days=60):
+def noRecent(minmatches=10, days=60):
 	global Heroes
 	Heroes = []
+	print ('Finding heroes not played within the last ' + str(days) + ' days (minimm of ' + str(minmatches) + ' games played)...')
 	r = requests.get('https://api.opendota.com/api/players/' + str(id) + '/Heroes')
 	data = json.loads(r.text)
 	longago = time.time() - 86400*days
@@ -49,7 +51,8 @@ def noRecent(minmatches, days=60):
 			Heroes.append(input)
 	identifyHeroes(Heroes)
 
-def WhatToPlay(suggestion_num=1):
+def whatToPlay(suggestion_num=1):
+	print "Now, what should you play today..."
 	if suggestion_num <= 0: print "You specifically asked for no (or less than zero) suggestions!"
 	else:
 		leader = (str(suggestion_num) + ' hero challenge for ' + time.strftime("%d/%m-%Y") + ': ')
@@ -60,9 +63,18 @@ def WhatToPlay(suggestion_num=1):
 			challenge.append(HeroNames[rng])
 			HeroNames.remove(HeroNames[rng])
 			suggestions += 1
-		print (leader + ', '.join(challenge))
+		return (leader + ', '.join(challenge) + '.')
+
+def writeToFile(output="", outputFile=""):
+	if outputFile == "": print "No output selected - no file written"
+	else:
+		file = open(outputFile, "w")
+		print ("Writing to file " + outputFile + ': "' + output + '"')
+		file.write(output)
+		print "Successfully wrote to file!"
+		file.close
 
 if __name__ == "__main__":
 	fetchID()
 	noRecent(10, 30)
-	WhatToPlay(3)
+	writeToFile(whatToPlay(3), 'WhatToPlay.txt')
