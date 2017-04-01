@@ -28,15 +28,20 @@ def compileOutput():
         file.close()
     
 def promptFTP():
+    noSkip = True
     while True:
         resp = raw_input ("Update FTP address? Y/N ").lower()
         if resp.lower() == 'n':
             print "Skipping!"
             FTPaddr = oldConfig['FTPaddr']
             FTPpass = oldConfig['FTPpass']
+            noSkip = False
             break
-        elif resp != 'y' and resp != 'n': print 'Input not accepted, try again'
-        elif resp == 'y': pass
+        elif resp == 'y': break
+        else:
+            print "Input not accepted, try again"
+            continue
+    while noSkip:
         input = raw_input('Enter FTP address: ')
         if input != '': FTPaddr = input
         else: FTPaddr = oldConfig['FTPaddr']
@@ -46,13 +51,16 @@ def promptFTP():
         break
 
 def promptID():
+    noSkip = True
     while True:
         resp = raw_input('Update Steam32 ID? Y/N ').lower()
         if resp == "n":
             print "Skipping!"
+            noSkip = False
             break
-        elif resp == "y": pass
+        elif resp == "y": break
         else: print "Input not accepted, try again"
+    while noSkip:
         resp2 = raw_input ("Enter Steam32 ID: ")
         if resp2 == '':
             steamID = oldConfig['steamID']
