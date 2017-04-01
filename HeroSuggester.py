@@ -4,7 +4,7 @@ from random import randint
 
 def loadData():
 	global id
-	id = json.loads(open("config.ini", "r").read())["steam32id"]
+	id = json.loads(open("config.ini", "r").read())["steamID"]
 
 def topHeroes(limit=25):
 	global Heroes
