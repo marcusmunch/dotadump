@@ -2,7 +2,10 @@
 import requests, json, time
 from random import randint
 
-id = open("./config.cfg", 'r').read()
+def fetchID():
+	global id
+	file = open("config.ini", 'r').read()
+	id = json.loads(file)['steamID']
 
 def topHeroes(limit=25):
 	global Heroes
@@ -58,5 +61,6 @@ def WhatToPlay(suggestion_num=1):
 			suggestions += 1
 
 if __name__ == "__main__":
+	fetchID()
 	noRecent(10, 30)
 	WhatToPlay(5)
