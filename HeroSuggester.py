@@ -3,6 +3,9 @@ import requests, json, time, os, sys
 from random import randint
 from ftplib import FTP
 
+# DotaTools Hero Suggester, written by MarcusMunch
+# Last updated March 3rd 2017
+
 def fetchID():
 	global id, FTPaddr, FTPpass
 	file = open("config.ini", 'r').read()
