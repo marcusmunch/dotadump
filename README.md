@@ -6,7 +6,7 @@ DotaTools is a set of python scripts that lets you output different information 
 ### HeroSuggester.py
 - [ ] Move API fix from topHeroes() to identifyHeroes()
 - [x] Print output in one line for better use with AnkhBot
-- [ ] Upload output to server (maybe separate script for privacy reasons)
+- [x] Upload output to server (maybe separate script for privacy reasons)
 
 ### SoloMMR.py
 - [ ] Make the file
@@ -15,6 +15,7 @@ DotaTools is a set of python scripts that lets you output different information 
 - [ ] Select minimum days since `HeroSuggester.py` heroes were last played
 - [ ] Select minimum games played with `HeroSuggester.py` heroes
 - [ ] Select number of heroes played for `HeroSuggester.py` heroes
+- [ ] Select minimum wins for heroes to play in `HeroSuggester.py`
 
 ### In general
 - [x] Have fun!
