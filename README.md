@@ -4,7 +4,7 @@ DotaTools is a set of python scripts that lets you output different information 
 ## To do:
 
 ### HeroSuggester.py
-- [ ] Move API fix from topHeroes() to identifyHeroes()
+- [ ] Move API fix from `topHeroes()` to `identifyHeroes()`
 - [x] Print output in one line for better use with AnkhBot
 - [x] Upload output to server (maybe separate script for privacy reasons)
 
