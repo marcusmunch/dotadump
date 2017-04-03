@@ -1,11 +1,15 @@
 #!/bin/user/python
-import requests, json, time
+import requests, json, time, os, sys
 from random import randint
+from ftplib import FTP
 
 def fetchID():
-	global id
+	global id, FTPaddr, FTPpass
 	file = open("config.ini", 'r').read()
-	id = json.loads(file)['steamID']
+	credent = json.loads(file)
+	id = credent['steamID']
+	FTPaddr = credent['FTPaddr']
+	FTPpass = credent['FTPpass']
 
 def topHeroes(limit=25):
 	global Heroes
@@ -52,8 +56,8 @@ def noRecent(minmatches=10, days=60):
 	identifyHeroes(Heroes)
 
 def whatToPlay(suggestion_num=1):
-	print "Now, what should you play today..."
-	if suggestion_num <= 0: print "You specifically asked for no (or less than zero) suggestions!"
+	print ('\nNow, what should you play today? \nPicking ' + str(suggestion_num) + ' out of ' + str(len(HeroNames)) + ' eligible heroes...\n')
+	if suggestion_num <= 0: print "\nYou specifically asked for no (or less than zero(!)) suggestions!"
 	else:
 		leader = (str(suggestion_num) + ' hero challenge for ' + time.strftime("%d/%m-%Y") + ': ')
 		suggestions = 0
@@ -65,16 +69,34 @@ def whatToPlay(suggestion_num=1):
 			suggestions += 1
 		return (leader + ', '.join(challenge) + '.')
 
-def writeToFile(output="", outputFile=""):
-	if outputFile == "": print "No output selected - no file written"
+def writeToFile(output="", outFile=""):
+	if outFile == "": print "No output selected - no file written"
 	else:
-		file = open(outputFile, "w")
-		print ("Writing to file " + outputFile + ': "' + output + '"')
+		global outputFile
+		file = open('./output/' + outFile, "w")
+		print ("Writing to file " + outFile + ': "' + output + '"')
 		file.write(output)
-		print "Successfully wrote to file!"
+		print "Successfully wrote to file!\n"
 		file.close
+
+def uploadToFTP(toUpload=False):
+	if toUpload:
+		try:
+			ftp = FTP(FTPaddr)
+			ftp.login(FTPaddr, FTPpass)
+			if not 'DotaTools' in ftp.nlst():
+				print 'Folder "DotaTools" not found. Creating...'
+				ftp.mkd('DotaTools')
+			ftp.cwd('DotaTools')
+			file = open('output/' + toUpload, 'r')
+			ftp.storbinary('STOR WhatToPlay.txt', file)
+			file.close()
+			print 'Uploaded file to FTP at ' + FTPaddr + '. Closing connection...\n'
+			ftp.quit()
+		except: print ('Unexpected error!'), sys.exc_info()
 
 if __name__ == "__main__":
 	fetchID()
 	noRecent(10, 30)
 	writeToFile(whatToPlay(3), 'WhatToPlay.txt')
+	uploadToFTP('WhatToPlay.txt')
