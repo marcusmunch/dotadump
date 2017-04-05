@@ -1,23 +1,16 @@
 #!/bin/user/python
-import requests, json, time, os, sys
+import requests, json, time, os, sys, settings
 from random import randint
 from ftplib import FTP
+from settings import STEAM_ID as id
 
 # DotaTools Hero Suggester, written by MarcusMunch
 # Last updated March 3rd 2017
 
-def fetchID():
-	global id, FTPaddr, FTPpass
-	file = open("config.ini", 'r').read()
-	credent = json.loads(file)
-	id = credent['steamID']
-	FTPaddr = credent['FTPaddr']
-	FTPpass = credent['FTPpass']
-
-def topHeroes(limit=25):
+def topHeroes(limit=10):
 	global Heroes
 	Heroes = []
-	r = requests.get('https://api.opendota.com/api/players/' + str(id) + '/heroes')
+	r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/heroes')
 	data = json.loads(r.text)
 	for i in range(0,limit):
 		input = int(data[i]['hero_id'])
@@ -25,11 +18,6 @@ def topHeroes(limit=25):
 		else: input -= 2
 		Heroes.append(input)
 	identifyHeroes(Heroes)
-
-def outsidetopHeroes(outside=10, limit=30):
-	topHeroes(outside + limit)
-	del Heroes[:outside]
-	print len(Heroes)
 
 def identifyHeroes(toIdentify=""):
 	global HeroNames
@@ -44,10 +32,10 @@ def identifyHeroes(toIdentify=""):
 def noRecent(minmatches=10, days=60):
 	global Heroes
 	Heroes = []
-	print ('Finding heroes not played within the last ' + str(days) + ' days (minimm of ' + str(minmatches) + ' games played)...')
-	r = requests.get('https://api.opendota.com/api/players/' + str(id) + '/Heroes')
+	print ('Finding heroes not played within the last ' + str(settings.SUGGEST_MIN_DAYS) + ' days (minimm of ' + str(settings.SUGGEST_MIN_GAMES) + ' games played)...')
+	r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/Heroes')
 	data = json.loads(r.text)
-	longago = time.time() - 86400*days
+	longago = time.time() - 86400*settings.SUGGEST_MIN_DAYS
 	for i in range(0,len(data)):
 		if data[i]['last_played'] == 0: None
 		elif data[i]['games'] < minmatches: None
@@ -85,21 +73,25 @@ def writeToFile(output="", outFile=""):
 def uploadToFTP(toUpload=False):
 	if toUpload:
 		try:
-			ftp = FTP(FTPaddr)
-			ftp.login(FTPaddr, FTPpass)
+			print ('Uploading ' + toUpload + '...')
+			ftp = FTP(settings.FTP_ADDR)
+			ftp.login(settings.FTP_ADDR, settings.FTP_PASS)
 			if not 'DotaTools' in ftp.nlst():
 				print 'Folder "DotaTools" not found. Creating...'
 				ftp.mkd('DotaTools')
 			ftp.cwd('DotaTools')
 			file = open('output/' + toUpload, 'r')
-			ftp.storbinary('STOR WhatToPlay.txt', file)
+			if settings.DEBUG_MODE is False:
+				ftp.storbinary('STOR WhatToPlay.txt', file)
+			elif settings.DEBUG_MODE is True:
+				msg = 'DEBUG MODE: NO DATA IS STORED'
+				print (len(msg)*'=' + '\n' + msg + '\n' + len(msg)*'=')
 			file.close()
-			print 'Uploaded file to FTP at ' + FTPaddr + '. Closing connection...\n'
+			print 'Uploaded file to FTP at ' + settings.FTP_ADDR + '. Closing connection...\n'
 			ftp.quit()
 		except: print ('Unexpected error!'), sys.exc_info()
 
 if __name__ == "__main__":
-	fetchID()
-	noRecent(10, 30)
-	writeToFile(whatToPlay(3), 'WhatToPlay.txt')
+	noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
+	writeToFile(whatToPlay(settings.SUGGEST_AMOUNT), 'WhatToPlay.txt')
 	uploadToFTP('WhatToPlay.txt')
