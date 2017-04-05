@@ -1,6 +1,11 @@
 # DotaTools
 DotaTools is a set of python scripts that lets you output different information from the OpenDota API to separate files. It requires a config.cfg file that currently needs to be manually generated, but later on there will be a separate script to set up DotaTools for different users etc., since it is intended for automated runs on e.g. a Raspberry Pi.
 
+## How to set up DotaTools
+Within the main folder you'll find `settings_example.py`. Edit this file with your logon credentials and your preferred FTP settings and remove the `_example` from the file name, giving you `settings.py`. Note that currently, HeroSuggester.py WILL output a text file and create the DotaTools folder on the FTP server, but it will NOT upload the text file to the FTP server if DEBUG_MODE is set to `True`.
+
+Now you can run HeroSuggester.py to get an interesting rotation of heroes to your pool!
+
 ## To do:
 
 ### HeroSuggester.py
