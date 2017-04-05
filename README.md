@@ -17,10 +17,10 @@ Now you can run HeroSuggester.py to get an interesting rotation of heroes to you
 - [ ] Make the file
 
 ### Setup.py
-- [ ] Select minimum days since `HeroSuggester.py` heroes were last played
-- [ ] Select minimum games played with `HeroSuggester.py` heroes
-- [ ] Select number of heroes played for `HeroSuggester.py` heroes
-- [ ] Select minimum wins for heroes to play in `HeroSuggester.py`
+- [x] Select minimum days since `HeroSuggester.py` heroes were last played
+- [x] Select minimum games played with `HeroSuggester.py` heroes
+- [x] Select number of heroes played for `HeroSuggester.py` heroes
+- [x] Select minimum wins for heroes to play in `HeroSuggester.py`
 
 ### In general
 - [x] Have fun!
