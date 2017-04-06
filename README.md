@@ -38,3 +38,5 @@ Now you can run HeroSuggester.py to get an interesting rotation of heroes to you
 - [x] Have fun!
 
 Written by MarcusMunch (http://github.com/MarcusMunch)
+
+Of course, a great big "THANK YOU!" goes out to the guys at [OpenDota](http://www.OpenDota.com) for making the API that's making this whole thing possible! I could literally not have done it without your work!
