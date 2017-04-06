@@ -1,5 +1,5 @@
-STEAM_ID = '3213567' # Your Steam32 ID
-FTP_ADDR = 'ftp.domain.com' # The address for your FTP connection. This will also be used as the username to login.
+STEAM_ID = '00000000' # Your Steam32 ID
+FTP_ADDR = 'ftp.domain.com' # The address for your FTP connection. This will also be used as the username to login. NOTE: If you do not have access to an FTP server, leave this at ''.
 FTP_PASS = 'hunter2' # The password for your FTP connection.
 
 SUGGEST_AMOUNT = 3 # Number of heroes for HeroSuggester.py to suggest
