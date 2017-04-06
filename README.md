@@ -1,5 +1,16 @@
 # DotaTools
-DotaTools is a set of python scripts that lets you output different information from the OpenDota API to separate files. It requires a config.cfg file that currently needs to be manually generated, but later on there will be a separate script to set up DotaTools for different users etc., since it is intended for automated runs on e.g. a Raspberry Pi.
+DotaTools is a set of Python scripts that lets you output different information from the OpenDota API to separate files. It requires only little setup (edit details in one(!) file) and no Python skills at all.
+
+### Requirements:
+
+In order to get anything, you must get OpenDota to read your match details. For this, you will need to go into Dota 2's Settings -> Options -> Advanced options -> Social and switch 'Expose Public Match Data' on.
+
+After this, you will need:
+
+- Python (2.7), obviously.
+- ...to log onto OpenDota (regularly*), as it only registers matches played within the last week of your latest login (forever if you donate - it's worth it!).
+- Your Steam32 ID. This is found as a string of numbers in the link to your profile on OpenDota _OR_ your 'Friend ID' on your profile in the Dota 2 client.
+- Optional: Access to an FTP server in order to upload your generated file(s).
 
 ## How to set up DotaTools
 Within the main folder you'll find `settings_example.py`. Edit this file with your FTP logon credentials and your settings and remove the `_example` from the file name, giving you `settings.py`.
