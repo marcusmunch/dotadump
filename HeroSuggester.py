@@ -13,10 +13,7 @@ def topHeroes(limit=10):
 	r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/heroes')
 	data = json.loads(r.text)
 	for i in range(0,limit):
-		input = int(data[i]['hero_id'])
-		if input < 24: input -= 1
-		else: input -= 2
-		Heroes.append(input)
+		Heroes.append(int(data[i]['hero_id']))
 	identifyHeroes(Heroes)
 
 def identifyHeroes(toIdentify=""):
@@ -27,6 +24,8 @@ def identifyHeroes(toIdentify=""):
 	data = json.loads(r.text)
 	for i in range(0, len(toIdentify)):
 		lookup = int(toIdentify[i])
+		if lookup < 24: lookup -=1
+		else: lookup -= 2
 		HeroNames.append(data[lookup]['localized_name'])
 
 def noRecent(minmatches=10, days=60):
@@ -41,12 +40,10 @@ def noRecent(minmatches=10, days=60):
 		elif data[i]['games'] < minmatches: None
 		elif data[i]['last_played'] <= longago:
 			input = int(data[i]['hero_id'])
-			if input < 24: input -= 1
-			else: input -= 2
 			Heroes.append(input)
 	identifyHeroes(Heroes)
 
-def whatToPlay(suggestion_num=1):
+def whatToPlay(suggestion_num=3):
 	print ('\nNow, what should you play today? \nPicking ' + str(suggestion_num) + ' out of ' + str(len(HeroNames)) + ' eligible heroes...\n')
 	if suggestion_num <= 0: print "\nYou specifically asked for no (or less than zero(!)) suggestions!"
 	else:

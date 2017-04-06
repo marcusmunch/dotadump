@@ -9,7 +9,7 @@ Now you can run HeroSuggester.py to get an interesting rotation of heroes to you
 ## To do:
 
 ### HeroSuggester.py
-- [ ] Move API fix from `topHeroes()` to `identifyHeroes()`
+- [x] Move API fix from `topHeroes()` to `identifyHeroes()`
 - [x] Print output in one line for better use with AnkhBot
 - [x] Upload output to server (maybe separate script for privacy reasons)
 
