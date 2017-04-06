@@ -1,4 +1,4 @@
 /output/
 /logs/
-/config.ini
-/true_config.ini
+/settings.py
+/settings.pyc
