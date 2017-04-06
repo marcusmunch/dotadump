@@ -88,7 +88,11 @@ def uploadToFTP(toUpload=False):
 			ftp.quit()
 		except: print ('Unexpected error!'), sys.exc_info()
 
-if __name__ == "__main__":
+def main():
 	noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
 	writeToFile(whatToPlay(settings.SUGGEST_AMOUNT), 'WhatToPlay.txt')
 	uploadToFTP('WhatToPlay.txt')
+
+if __name__ == "__main__":
+	if settings.DEBUG_MODE is True: print 'DEBUG MODE ENABLED'
+	main()
