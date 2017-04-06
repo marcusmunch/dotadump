@@ -63,12 +63,12 @@ def whatToPlay(suggestion_num=1):
 def writeToFile(output="", outFile=""):
 	if outFile == "": print "No output selected - no file written"
 	else:
-		global outputFile
-		file = open('./output/' + outFile, "w")
 		print ("Writing to file " + outFile + ': "' + output + '"')
-		file.write(output)
+		if settings.DEBUG_MODE is False:
+			file = open('./output/' + outFile, "w")
+			file.write(output)
+			file.close
 		print "Successfully wrote to file!\n"
-		file.close
 
 def uploadToFTP(toUpload=False):
 	if toUpload:
@@ -83,9 +83,6 @@ def uploadToFTP(toUpload=False):
 			file = open('output/' + toUpload, 'r')
 			if settings.DEBUG_MODE is False:
 				ftp.storbinary('STOR WhatToPlay.txt', file)
-			elif settings.DEBUG_MODE is True:
-				msg = 'DEBUG MODE: NO DATA IS STORED'
-				print (len(msg)*'=' + '\n' + msg + '\n' + len(msg)*'=')
 			file.close()
 			print 'Uploaded file to FTP at ' + settings.FTP_ADDR + '. Closing connection...\n'
 			ftp.quit()
