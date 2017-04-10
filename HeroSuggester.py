@@ -1,8 +1,12 @@
 #!/bin/user/python
-import requests, json, time, os, sys, settings
-from random import randint
 from ftplib import FTP
-from settings import STEAM_ID as id
+from random import randint
+
+import json
+import requests
+import settings
+import sys
+import time
 
 
 # DotaTools Hero Suggester, written by MarcusMunch
