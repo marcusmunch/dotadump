@@ -15,9 +15,11 @@ import time
 
 # Give user warning if Debug Mode is enabled in settings.py
 if settings.DEBUG_MODE == True:
-    print ('\n' + '='*(len(settings.DEBUG_MESSAGE)+2))
-    print (' ' + settings.DEBUG_MESSAGE + ' ')
-    print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
+    try:
+        print ('\n' + '='*(len(settings.DEBUG_MESSAGE)+2))
+        print (' ' + settings.DEBUG_MESSAGE + ' ')
+        print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
+    except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
 
 
 def topHeroes(limit=10):
