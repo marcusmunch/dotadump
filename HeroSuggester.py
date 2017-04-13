@@ -12,6 +12,16 @@ import time
 # DotaTools Hero Suggester, written by MarcusMunch
 # Last updated April 8th 2017
 
+
+# Give user warning if Debug Mode is enabled in settings.py
+if settings.DEBUG_MODE == True:
+    try:
+        print ('\n' + '='*(len(settings.DEBUG_MESSAGE)+2))
+        print (' ' + settings.DEBUG_MESSAGE + ' ')
+        print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
+    except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
+
+
 def topHeroes(limit=10):
     global Heroes
     Heroes = []
@@ -88,23 +98,23 @@ def writeToFile(output="", outFile=""):
 def uploadToFTP(toUpload=False):
     if not settings.FTP_ADDR:
         print "No FTP settings were found. Skipping upload..."
-        if toUpload and settings.FTP_ADDR:
-            try:
-                print ('Uploading ' + toUpload + '...')
-                ftp = FTP(settings.FTP_ADDR)
-                ftp.login(settings.FTP_ADDR, settings.FTP_PASS)
-                if not 'DotaTools' in ftp.nlst():
-                    print 'Folder "DotaTools" not found. Creating...'
-                    ftp.mkd('DotaTools')
-                ftp.cwd('DotaTools')
-                file = open('output/' + toUpload, 'r')
-                if settings.DEBUG_MODE is False:
-                    ftp.storbinary('STOR WhatToPlay.txt', file)
-                file.close()
-                print 'Uploaded file to FTP at ' + settings.FTP_ADDR + '. Closing connection...\n'
-                ftp.quit()
-            except:
-                print ('Unexpected error!'), sys.exc_info()
+    if toUpload and settings.FTP_ADDR:
+        try:
+            print ('Uploading ' + toUpload + '...')
+            ftp = FTP(settings.FTP_ADDR)
+            ftp.login(settings.FTP_ADDR, settings.FTP_PASS)
+            if not 'DotaTools' in ftp.nlst():
+                print 'Folder "DotaTools" not found. Creating...'
+                ftp.mkd('DotaTools')
+            ftp.cwd('DotaTools')
+            file = open('output/' + toUpload, 'r')
+            if settings.DEBUG_MODE is False:
+                ftp.storbinary('STOR WhatToPlay.txt', file)
+            file.close()
+            print 'Uploaded file to FTP at ' + settings.FTP_ADDR + '. Closing connection...\n'
+            ftp.quit()
+        except:
+            print ('Unexpected error!'), sys.exc_info()
 
 
 def main():
@@ -114,5 +124,4 @@ def main():
 
 
 if __name__ == "__main__":
-    if settings.DEBUG_MODE is True: print 'DEBUG MODE ENABLED'
     main()
