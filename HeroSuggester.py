@@ -10,7 +10,7 @@ import time
 
 
 # DotaTools Hero Suggester, written by MarcusMunch
-# Last updated March 3rd 2017
+# Last updated April 8th 2017
 
 def topHeroes(limit=10):
     global Heroes
