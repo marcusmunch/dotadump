@@ -3,6 +3,7 @@ from ftplib import FTP
 from random import randint
 
 import json
+import os
 import requests
 import settings
 import sys
@@ -10,6 +11,7 @@ import time
 
 # DotaTools Solo MMR tracker, written by MarcusMunch
 # Last updated April 13th 2017
+
 
 # Edit below line to change name of file being output
 outFile = 'solommr.txt'
@@ -29,7 +31,6 @@ def lookup(param=""):
     if param:
         r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID)
         data = json.loads(r.text)
-        if param: print ('Your "' + param + '" is: ' + data[param])
         return data[param]
 
 # Some profile data requires you to look deeper into the profile.
@@ -43,16 +44,18 @@ def profileLookup(param=""):
 def translateTime(inputTime=time.time()):
     return time.strftime('%m/%d %H:%M:%S', time.localtime(int(inputTime)))
 
+# Compile the output that will be written to the file
 def compileOutput(result='', outputTime=time.time()):
     global output
     output = ''
     if result:
         output = 'Solo MMR for player "' + profileLookup('personaname') + '" as of ' + translateTime(lookup('tracked_until')) + ': ' + result
 
+# Write the file
 def writeToFile(output="", outFile=""):
     if outFile == "":
         print "No output selected - no file written"
-    else:
+    elif output:
         print ("Writing to file " + outFile + ': "' + output + '"')
         if settings.DEBUG_MODE is False:
             file = open('./output/' + outFile, "w")
@@ -60,6 +63,7 @@ def writeToFile(output="", outFile=""):
             file.close
         print "Successfully wrote to file!\n"
 
+# Connect to FTP (if specified in settings) and upload file to ./DotaTools/
 def uploadToFTP(toUpload=False):
     if not settings.FTP_ADDR:
         print "No FTP settings were found. Skipping upload..."
@@ -81,7 +85,19 @@ def uploadToFTP(toUpload=False):
         except:
             print ('Unexpected error!'), sys.exc_info()
 
+
+def main():
+    def mmrNoUpdate():
+        if not os.path.exists('./output/' + outFile): return False
+        oldOutput = open('./output/' + outFile, 'r').read()
+        oldMMR = oldOutput[-len(lookup('solo_competitive_rank')):]
+        if oldMMR == lookup('solo_competitive_rank'):
+            return True
+    if not mmrNoUpdate():
+        compileOutput(lookup('solo_competitive_rank'))
+        writeToFile(output, outFile)
+        uploadToFTP(outFile)
+    else: print 'No new MMR. No changes will be written.'
+
 if __name__ == '__main__':
-    compileOutput(lookup('solo_competitive_rank'))
-    writeToFile(output, outFile)
-    uploadToFTP(outFile)
+    main()
