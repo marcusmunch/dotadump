@@ -19,19 +19,10 @@ Now you can run HeroSuggester.py to get an interesting rotation of heroes to you
 
 ## To do:
 
-### HeroSuggester.py
-- [x] Move API fix from `topHeroes()` to `identifyHeroes()`
-- [x] Print output in one line for better use with AnkhBot
-- [x] Upload output to server (maybe separate script for privacy reasons)
-
 ### SoloMMR.py
-- [ ] Make the file
+- [ ] In the name of saving bandwidth, have the script compare MMR fetched from API to preexisting output file. If nothing is changed, files will not be updated.
 
 ### Setup.py
-- [x] Select minimum days since `HeroSuggester.py` heroes were last played
-- [x] Select minimum games played with `HeroSuggester.py` heroes
-- [x] Select number of heroes played for `HeroSuggester.py` heroes
-- [x] Select minimum wins for heroes to play in `HeroSuggester.py`
 - [ ] Select minimum winrate for heroes to play in `HeroSuggester.py`
 
 ### In general
