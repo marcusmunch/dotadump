@@ -97,7 +97,7 @@ def main():
         compileOutput(lookup('solo_competitive_rank'))
         writeToFile(output, outFile)
         uploadToFTP(outFile)
-    else: print 'No new MMR. No changes will be written.'
+    else: print (time.strftime('[%d/%m-%y %H:%M]: ') + 'No new MMR. No changes will be written.')
 
 if __name__ == '__main__':
     main()
