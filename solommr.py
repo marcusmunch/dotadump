@@ -42,7 +42,7 @@ def profileLookup(param=""):
 
 # Convert returned number of seconds since Epoch to human-readable time
 def translateTime(inputTime=time.time()):
-    return time.strftime('%m/%d %H:%M:%S', time.localtime(int(inputTime)))
+    return time.strftime('%d/%m %H:%M:%S', time.localtime(int(inputTime)))
 
 # Compile the output that will be written to the file
 def compileOutput(result='', outputTime=time.time()):
