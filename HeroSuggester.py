@@ -12,6 +12,8 @@ import time
 # DotaTools Hero Suggester, written by MarcusMunch
 # Last updated April 8th 2017
 
+# Edit below line to change name of file being output
+outFile = 'whattoplay.txt'
 
 # Give user warning if Debug Mode is enabled in settings.py
 if settings.DEBUG_MODE == True:
@@ -48,15 +50,19 @@ def identifyHeroes(toIdentify=""):
 
 def noRecent(minmatches=10, days=60):
     Heroes = []
-    print ('Finding heroes not played within the last ' + str(settings.SUGGEST_MIN_DAYS) + ' days (minimm of ' + str(
-        settings.SUGGEST_MIN_GAMES) + ' games played)...')
+    print ('Finding heroes not played within the last ' + str(days) + ' days (minimum of ' + str(
+        minmatches) + ' games played)...')
     r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/Heroes')
     data = json.loads(r.text)
-    longago = time.time() - 86400 * settings.SUGGEST_MIN_DAYS
+    longago = time.time() - (86400 * days)
+    print longago
     for i in range(0, len(data)):
-        if data[i]['last_played'] <= longago:
-            input = data[i]
-            Heroes.append(input)
+        if data[i]['last_played'] == 0: None
+        elif data[i]['games'] <= minmatches: None
+        elif data[i]['last_played'] <= longago:
+            oldHero = data[i]
+            Heroes.append(oldHero)
+            print data[i]['last_played']
     return Heroes
 
 
@@ -74,7 +80,8 @@ def whatToPlay(pickFrom, suggestion_num=3):
             challenge.append(pickFrom[rng]['localized_name'])
             pickFrom.remove(pickFrom[rng])
             suggestions += 1
-        return (leader + ', '.join(challenge) + '.')
+        output = leader + ', '.join(challenge) + '.' 
+        return output
 
 
 def writeToFile(output="", outFile=""):
@@ -113,7 +120,9 @@ def uploadToFTP(toUpload=False):
 
 def main():
     HeroPool = noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
-    print whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
+    ToPlay = whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
+    writeToFile(ToPlay, outFile)
+    uploadToFTP(outFile)
 
 if __name__ == "__main__":
     main()
