@@ -23,30 +23,32 @@ if settings.DEBUG_MODE == True:
 
 
 def topHeroes(limit=10):
+    global Heroes
     Heroes = []
     r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/heroes')
     data = json.loads(r.text)
     for i in range(0, limit):
-        Heroes.append(int(data[i]))
-    return Heroes
+        Heroes.append(int(data[i]['hero_id']))
+    identifyHeroes(Heroes)
 
 
 def identifyHeroes(toIdentify=""):
+    global HeroNames
     HeroNames = []
-    print "Searching for localized names for found Hero ID's."
+    print "Converting found Hero ID's to localized names..."
     r = requests.get('https://api.opendota.com/api/heroes')
     data = json.loads(r.text)
     for i in range(0, len(toIdentify)):
-        lookup = int(toIdentify[i]['hero_id'])
+        lookup = int(toIdentify[i])
         if lookup < 24:
             lookup -= 1
         else:
             lookup -= 2
-        toIdentify[i]['localized_name'] = data[i]['localized_name']
-    return toIdentify
+        HeroNames.append(data[lookup]['localized_name'])
 
 
 def noRecent(minmatches=10, days=60):
+    # global Heroes
     Heroes = []
     print ('Finding heroes not played within the last ' + str(settings.SUGGEST_MIN_DAYS) + ' days (minimm of ' + str(
         settings.SUGGEST_MIN_GAMES) + ' games played)...')
@@ -54,25 +56,29 @@ def noRecent(minmatches=10, days=60):
     data = json.loads(r.text)
     longago = time.time() - 86400 * settings.SUGGEST_MIN_DAYS
     for i in range(0, len(data)):
-        if data[i]['last_played'] <= longago:
-            input = data[i]
+        if data[i]['last_played'] == 0:
+            None
+        elif data[i]['games'] < minmatches:
+            None
+        elif data[i]['last_played'] <= longago:
+            input = int(data[i]['hero_id'])
             Heroes.append(input)
-    return Heroes
+    identifyHeroes(Heroes)
 
 
-def whatToPlay(pickFrom, suggestion_num=3):
+def whatToPlay(suggestion_num=3):
     print ('\nNow, what should you play today? \nPicking ' + str(suggestion_num) + ' out of ' + str(
-        len(pickFrom)) + ' eligible heroes...\n')
+        len(HeroNames)) + ' eligible heroes...\n')
     if suggestion_num <= 0:
         print "\nYou specifically asked for no (or less than zero(!)) suggestions!"
     else:
         leader = (str(suggestion_num) + ' hero challenge for ' + time.strftime("%d/%m-%Y") + ': ')
         suggestions = 0
         challenge = []
-        while suggestions < suggestion_num and len(pickFrom) > 0:
-            rng = randint(0, len(pickFrom)) - 1
-            challenge.append(pickFrom[rng]['localized_name'])
-            pickFrom.remove(pickFrom[rng])
+        while suggestions < suggestion_num and len(HeroNames) > 0:
+            rng = randint(0, len(HeroNames)) - 1
+            challenge.append(HeroNames[rng])
+            HeroNames.remove(HeroNames[rng])
             suggestions += 1
         return (leader + ', '.join(challenge) + '.')
 
@@ -112,8 +118,10 @@ def uploadToFTP(toUpload=False):
 
 
 def main():
-    HeroPool = noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
-    print whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
+    noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
+    writeToFile(whatToPlay(settings.SUGGEST_AMOUNT), 'WhatToPlay.txt')
+    uploadToFTP('WhatToPlay.txt')
+
 
 if __name__ == "__main__":
     main()
