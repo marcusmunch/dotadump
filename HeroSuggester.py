@@ -25,15 +25,6 @@ if settings.DEBUG_MODE == True:
     except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
 
 
-def topHeroes(limit=10):
-    Heroes = []
-    r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/heroes')
-    data = json.loads(r.text)
-    for i in range(0, limit):
-        Heroes.append(int(data[i]))
-    return Heroes
-
-
 def identifyHeroes(toIdentify=""):
     print "Searching for localized names for found Hero ID's."
     r = requests.get('https://api.opendota.com/api/heroes')
@@ -49,7 +40,7 @@ def identifyHeroes(toIdentify=""):
 
 
 def noRecent(minmatches=10, days=60):
-    Heroes = []
+    output = []
     print ('Finding heroes not played within the last ' + str(days) + ' days (minimum of ' + str(
         minmatches) + ' games played)...')
     r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/Heroes')
@@ -60,8 +51,8 @@ def noRecent(minmatches=10, days=60):
         elif data[i]['games'] <= minmatches: None
         elif data[i]['last_played'] <= longago:
             oldHero = data[i]
-            Heroes.append(oldHero)
-    return Heroes
+            output.append(oldHero)
+    return output
 
 
 def whatToPlay(pickFrom, suggestion_num=3):
