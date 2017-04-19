@@ -3,6 +3,7 @@ from ftplib import FTP
 from random import randint
 
 import json
+import os
 import requests
 import settings
 import sys
@@ -12,6 +13,8 @@ import time
 # DotaTools Hero Suggester, written by MarcusMunch
 # Last updated April 8th 2017
 
+# Edit below line to change name of file being output
+outFile = 'whattoplay.txt'
 
 # Give user warning if Debug Mode is enabled in settings.py
 if settings.DEBUG_MODE == True:
@@ -44,26 +47,25 @@ def identifyHeroes(toIdentify=""):
             lookup -= 1
         else:
             lookup -= 2
-        HeroNames.append(data[lookup]['localized_name'])
+        toIdentify[i]['localized_name'] = data[lookup]['localized_name']
+    return toIdentify
 
 
 def noRecent(minmatches=10, days=60):
     # global Heroes
     Heroes = []
-    print ('Finding heroes not played within the last ' + str(settings.SUGGEST_MIN_DAYS) + ' days (minimm of ' + str(
-        settings.SUGGEST_MIN_GAMES) + ' games played)...')
+    print ('Finding heroes not played within the last ' + str(days) + ' days (minimum of ' + str(
+        minmatches) + ' games played)...')
     r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/Heroes')
     data = json.loads(r.text)
-    longago = time.time() - 86400 * settings.SUGGEST_MIN_DAYS
+    longago = time.time() - (86400 * days)
     for i in range(0, len(data)):
-        if data[i]['last_played'] == 0:
-            None
-        elif data[i]['games'] < minmatches:
-            None
+        if data[i]['last_played'] == 0: None
+        elif data[i]['games'] <= minmatches: None
         elif data[i]['last_played'] <= longago:
-            input = int(data[i]['hero_id'])
-            Heroes.append(input)
-    identifyHeroes(Heroes)
+            oldHero = data[i]
+            Heroes.append(oldHero)
+    return Heroes
 
 
 def whatToPlay(suggestion_num=3):
@@ -80,13 +82,17 @@ def whatToPlay(suggestion_num=3):
             challenge.append(HeroNames[rng])
             HeroNames.remove(HeroNames[rng])
             suggestions += 1
-        return (leader + ', '.join(challenge) + '.')
+        output = leader + ', '.join(challenge) + '.' 
+        return output
 
 
 def writeToFile(output="", outFile=""):
     if outFile == "":
         print "No output selected - no file written"
     else:
+        if not os.path.exists('output'):
+            print 'Folder "output" not found. Creating...\n'
+            if settings.DEBUG_MODE is False: os.mkdir('output')
         print ("Writing to file " + outFile + ': "' + output + '"')
         if settings.DEBUG_MODE is False:
             file = open('./output/' + outFile, "w")
@@ -118,10 +124,10 @@ def uploadToFTP(toUpload=False):
 
 
 def main():
-    noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
-    writeToFile(whatToPlay(settings.SUGGEST_AMOUNT), 'WhatToPlay.txt')
-    uploadToFTP('WhatToPlay.txt')
-
+    HeroPool = noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
+    ToPlay = whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
+    writeToFile(ToPlay, outFile)
+    uploadToFTP(outFile)
 
 if __name__ == "__main__":
     main()
