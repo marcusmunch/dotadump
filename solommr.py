@@ -49,7 +49,8 @@ def compileOutput(result='', outputTime=time.time()):
     global output
     output = ''
     if result:
-        output = 'Solo MMR for player "' + profileLookup('personaname') + '" as of ' + translateTime(lookup('tracked_until')) + ': ' + result
+        data = json.loads(requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/matches?limit=1&lobby_type=7').text)
+        output = 'Solo MMR for player "' + profileLookup('personaname') + '" as of ' + translateTime(data[0]['start_time'] + data[0]['duration']) + ': ' + result
 
 # Write the file
 def writeToFile(output="", outFile=""):

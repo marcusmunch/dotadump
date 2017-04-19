@@ -25,6 +25,9 @@ Now you can run HeroSuggester.py to get an interesting rotation of heroes to you
 ### Setup.py
 - [ ] Select minimum winrate for heroes to play in `HeroSuggester.py`
 
+### SoloMMR.py
+- [x] Output end time of last ranked game rather than current time
+
 ### In general
 - [x] Have fun!
 
