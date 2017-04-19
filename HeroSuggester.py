@@ -35,7 +35,6 @@ def topHeroes(limit=10):
 
 
 def identifyHeroes(toIdentify=""):
-    HeroNames = []
     print "Searching for localized names for found Hero ID's."
     r = requests.get('https://api.opendota.com/api/heroes')
     data = json.loads(r.text)
@@ -56,14 +55,12 @@ def noRecent(minmatches=10, days=60):
     r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/Heroes')
     data = json.loads(r.text)
     longago = time.time() - (86400 * days)
-    print longago
     for i in range(0, len(data)):
         if data[i]['last_played'] == 0: None
         elif data[i]['games'] <= minmatches: None
         elif data[i]['last_played'] <= longago:
             oldHero = data[i]
             Heroes.append(oldHero)
-            print data[i]['last_played']
     return Heroes
 
 
