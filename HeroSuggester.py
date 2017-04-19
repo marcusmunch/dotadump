@@ -45,7 +45,7 @@ def identifyHeroes(toIdentify=""):
             lookup -= 1
         else:
             lookup -= 2
-        toIdentify[i]['localized_name'] = data[i]['localized_name']
+        toIdentify[i]['localized_name'] = data[lookup]['localized_name']
     return toIdentify
 
 
