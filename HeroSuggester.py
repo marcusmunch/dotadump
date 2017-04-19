@@ -3,6 +3,7 @@ from ftplib import FTP
 from random import randint
 
 import json
+import os
 import requests
 import settings
 import sys
@@ -88,6 +89,9 @@ def writeToFile(output="", outFile=""):
     if outFile == "":
         print "No output selected - no file written"
     else:
+        if not os.path.exists('output'):
+            print 'Folder "output" not found. Creating...\n'
+            if settings.DEBUG_MODE is False: os.mkdir('output')
         print ("Writing to file " + outFile + ': "' + output + '"')
         if settings.DEBUG_MODE is False:
             file = open('./output/' + outFile, "w")
