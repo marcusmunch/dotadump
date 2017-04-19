@@ -19,8 +19,8 @@ Now you can run HeroSuggester.py to get an interesting rotation of heroes to you
 
 ## To do:
 
-### SoloMMR.py
-- [x] In the name of saving bandwidth, have the script compare MMR fetched from API to preexisting output file. If nothing is changed, files will not be updated.
+### HeroSuggester.py
+- [ ] Apply minimum winrate for picked heroes
 
 ### Setup.py
 - [ ] Select minimum winrate for heroes to play in `HeroSuggester.py`
