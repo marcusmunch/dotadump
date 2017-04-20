@@ -13,23 +13,12 @@ After this, you will need:
 - Optional: Access to an FTP server in order to upload your generated file(s).
 
 ## How to set up DotaTools
-Within the main folder you'll find `settings_example.py`. Edit this file with your FTP logon credentials and your settings and remove the `_example` from the file name, giving you `settings.py`.
+Within the main folder you'll find `settings_example.py`. Edit this file with your FTP logon credentials and your settings and remove the `_example` from the file name, giving you `settings.py`. Remember to turn `DEBUG_MODE` off before you start running your scripts if you actually want it to output files!
 
-Now you can run HeroSuggester.py to get an interesting rotation of heroes to your pool!
+Now, as of April 20th, DotaTools contains the following scripts:
 
-## To do:
-
-### HeroSuggester.py
-- [ ] Apply minimum winrate for picked heroes
-
-### Setup.py
-- [ ] Select minimum winrate for heroes to play in `HeroSuggester.py`
-
-### SoloMMR.py
-- [x] Output end time of last ranked game rather than current time
-
-### In general
-- [x] Have fun!
+- `HeroSuggester.py` picks a number of heroes (selected by you) from a number of parameters and picks out three random heroes for you to play. Every time this script is run, it will replace the file on the FTP server, as it is currently designed for a single daily run.
+- Solommr.py fetches your current Solo MMR as of your latest completed ranked game. If there are no changes to the output file, it will not connect to the FTP server and will not try to upload anything.
 
 Written by MarcusMunch (http://github.com/MarcusMunch)
 
