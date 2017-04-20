@@ -11,7 +11,7 @@ import time
 
 
 # DotaTools Hero Suggester, written by MarcusMunch
-# Last updated April 8th 2017
+# Last updated April 19th 2017
 
 # Edit below line to change name of file being output
 outFile = 'whattoplay.txt'
