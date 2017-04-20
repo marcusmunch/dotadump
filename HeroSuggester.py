@@ -42,12 +42,15 @@ def identifyHeroes(toIdentify=""):
 def noRecent(minmatches=10, days=60):
     output = []
     print ('Finding heroes not played within the last ' + str(days) + ' days (minimum of ' + str(
-        minmatches) + ' games played)...')
+        minmatches) + ' games played and minimum win rate of ' + str(settings.SUGGEST_MIN_WINRATE)   + '%)...')
     r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/Heroes')
     data = json.loads(r.text)
     longago = time.time() - (86400 * days)
     for i in range(0, len(data)):
+        if data[i]['games'] > 0: winrate = (float(data[i]['win']) / float(data[i]['games'])) * 100
+        else: winrate = 0
         if data[i]['last_played'] == 0: None
+        elif winrate <= settings.SUGGEST_MIN_WINRATE: None
         elif data[i]['games'] <= minmatches: None
         elif data[i]['last_played'] <= longago:
             oldHero = data[i]
