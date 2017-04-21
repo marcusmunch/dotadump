@@ -59,21 +59,28 @@ def noRecent(minmatches=10, days=60):
 
 
 def whatToPlay(pickFrom, suggestion_num=3):
-    print ('\nNow, what should you play today? \nPicking ' + str(suggestion_num) + ' out of ' + str(
-        len(pickFrom)) + ' eligible heroes...\n')
-    if suggestion_num <= 0:
-        print "\nYou specifically asked for no (or less than zero(!)) suggestions!"
+    if len(pickFrom) == 0:
+        print 'No heroes fulfill the selected criteria'
+        return ''
     else:
-        leader = (str(suggestion_num) + ' hero challenge for ' + time.strftime("%d/%m-%Y") + ': ')
-        suggestions = 0
-        challenge = []
-        while suggestions < suggestion_num and len(pickFrom) > 0:
-            rng = randint(0, len(pickFrom)) - 1
-            challenge.append(pickFrom[rng]['localized_name'])
-            pickFrom.remove(pickFrom[rng])
-            suggestions += 1
-        output = leader + ', '.join(challenge) + '.' 
-        return output
+        print ('\nNow, what should you play today? \nPicking ' + str(min(suggestion_num, len(pickFrom))) + ' out of ' + str(len(pickFrom)) + ' eligible heroes...\n')
+        if suggestion_num <= 0:
+            print "\nYou specifically asked for no (or less than zero(!)) suggestions!"
+        else:
+            leader = (str(suggestion_num) + ' hero challenge for ' + time.strftime("%d/%m-%Y") + ': ')
+            suggestions = 0
+            challenge = []
+            def winrate(hero):
+                rate = '%.2f' % (float(pickFrom[hero]['win']) / float(pickFrom[hero]['games'])*100)
+                return ('(' + rate + '% win)')
+            while suggestions < suggestion_num and len(pickFrom) > 0:
+                rng = randint(0, len(pickFrom)) - 1
+                string = pickFrom[rng]['localized_name'] + ' ' + winrate(rng)
+                challenge.append(string)
+                pickFrom.remove(pickFrom[rng])
+                suggestions += 1
+            output = leader + ', '.join(challenge) + '.' 
+            return output
 
 
 def writeToFile(output="", outFile=""):
