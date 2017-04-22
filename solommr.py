@@ -49,8 +49,8 @@ def compileOutput(result='', outputTime=time.time()):
     global output
     output = ''
     if result:
-        data = json.loads(requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/matches?limit=1&lobby_type=7').text)
-        output = 'Solo MMR for player "' + profileLookup('personaname') + '" as of ' + translateTime(data[0]['start_time'] + data[0]['duration']) + ': ' + result
+        data = json.loads(requests.get('https://api.opendota.com/api/players/%s/matches?limit=1&lobby_type=7' % settings.STEAM_ID).text)
+        output = 'Solo MMR for player "%s" as of %s: %s' % (profileLookup('personaname'), translateTime(data[0]['start_time'] + data[0]['duration']), result)
 
 # Write the file
 def writeToFile(output="", outFile=""):
@@ -70,7 +70,7 @@ def uploadToFTP(toUpload=False):
         print "No FTP settings were found. Skipping upload..."
     if toUpload and settings.FTP_ADDR:
         try:
-            print ('Uploading ' + toUpload + '...')
+            print ('Uploading %s...' % toUpload)
             ftp = FTP(settings.FTP_ADDR)
             ftp.login(settings.FTP_ADDR, settings.FTP_PASS)
             if not 'DotaTools' in ftp.nlst():

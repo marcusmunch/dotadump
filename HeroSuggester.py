@@ -41,9 +41,8 @@ def identifyHeroes(toIdentify=""):
 
 def noRecent(minmatches=10, days=60):
     output = []
-    print ('Finding heroes not played within the last ' + str(days) + ' days (minimum of ' + str(
-        minmatches) + ' games played and minimum win rate of ' + str(settings.SUGGEST_MIN_WINRATE)   + '%)...')
-    r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID + '/Heroes')
+    print 'Finding heroes not played within the last %s days (minimum of %s games played and minimum win rate of %s%%)...' % (days, minmatches, settings.SUGGEST_MIN_WINRATE)
+    r = requests.get('https://api.opendota.com/api/players/%s/Heroes' % settings.STEAM_ID)
     data = json.loads(r.text)
     longago = time.time() - (86400 * days)
     for i in range(0, len(data)):
@@ -63,7 +62,7 @@ def whatToPlay(pickFrom, suggestion_num=3):
         print 'No heroes fulfill the selected criteria'
         return ''
     else:
-        print ('\nNow, what should you play today? \nPicking ' + str(min(suggestion_num, len(pickFrom))) + ' out of ' + str(len(pickFrom)) + ' eligible heroes...\n')
+        print '\nNow, what should you play today? \nPicking %s out of %s eligible heroes...\n' % (min(suggestion_num, len(pickFrom)), len(pickFrom))
         if suggestion_num <= 0:
             print "\nYou specifically asked for no (or less than zero(!)) suggestions!"
         else:
@@ -72,7 +71,7 @@ def whatToPlay(pickFrom, suggestion_num=3):
             challenge = []
             def winrate(hero):
                 rate = '%.2f' % (float(pickFrom[hero]['win']) / float(pickFrom[hero]['games'])*100)
-                return ('(' + rate + '% win)')
+                return ('(%s%% win)') % rate
             while suggestions < suggestion_num and len(pickFrom) > 0:
                 rng = randint(0, len(pickFrom)) - 1
                 string = pickFrom[rng]['localized_name'] + ' ' + winrate(rng)
@@ -90,7 +89,7 @@ def writeToFile(output="", outFile=""):
         if not os.path.exists('output'):
             print 'Folder "output" not found. Creating...\n'
             if settings.DEBUG_MODE is False: os.mkdir('output')
-        print ("Writing to file " + outFile + ': "' + output + '"')
+        print 'Writing to file %s: "%s"' % (outFile, output)
         if settings.DEBUG_MODE is False:
             file = open('./output/' + outFile, "w")
             file.write(output)
@@ -114,7 +113,7 @@ def uploadToFTP(toUpload=False):
             if settings.DEBUG_MODE is False:
                 ftp.storbinary('STOR WhatToPlay.txt', file)
             file.close()
-            print 'Uploaded file to FTP at ' + settings.FTP_ADDR + '. Closing connection...\n'
+            print 'Uploaded file to FTP at %s. Closing connection...\n' % settings.FTP_ADDR
             ftp.quit()
         except:
             print ('Unexpected error!'), sys.exc_info()
