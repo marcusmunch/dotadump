@@ -111,7 +111,7 @@ def uploadToFTP(toUpload=False):
             ftp.cwd('DotaTools')
             file = open('output/' + toUpload, 'r')
             if settings.DEBUG_MODE is False:
-                ftp.storbinary('STOR WhatToPlay.txt', file)
+                ftp.storbinary('STOR %s' % outFile, file)
             file.close()
             print 'Uploaded file to FTP at %s. Closing connection...\n' % settings.FTP_ADDR
             ftp.quit()
