@@ -113,7 +113,7 @@ def uploadToFTP(toUpload=False):
             if settings.DEBUG_MODE is False:
                 ftp.storbinary('STOR %s' % outFile, file)
             file.close()
-            print 'Uploaded file to FTP at %s. Closing connection...\n' % settings.FTP_ADDR
+            print 'Uploaded file %s to FTP at %s. Closing connection...\n' % (outFile, settings.FTP_ADDR)
             ftp.quit()
         except:
             print ('Unexpected error!'), sys.exc_info()
