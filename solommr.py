@@ -30,10 +30,8 @@ if settings.DEBUG_MODE == True:
 # Look up basic profile data
 def lookup(param=""):
     if param:
-        print 'Looking up "%s"...' % param
         r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID)
         data = json.loads(r.text)
-        print '%s is currently %s\n' % (param.capitalize(), data[param])
         return data[param]
 
 # Some profile data requires you to look deeper into the profile.
@@ -63,6 +61,8 @@ def main():
         if oldMMR == lookup('solo_competitive_rank'):
             return True
     if not mmrNoUpdate():
+        print 'Looking up solo MMR...'
+        print 'Current solo MMR is %s\n' % lookup('solo_competitive_rank')
         compileOutput(lookup('solo_competitive_rank'))
         DotaTools.writeToFile(output, outFile)
         DotaTools.upload(outFile)
