@@ -2,6 +2,7 @@
 from ftplib import FTP
 from random import randint
 
+import DotaTools
 import json
 import os
 import requests
@@ -97,33 +98,11 @@ def writeToFile(output="", outFile=""):
         print "Successfully wrote to file!\n"
 
 
-def uploadToFTP(toUpload=False):
-    if not settings.FTP_ADDR:
-        print "No FTP settings were found. Skipping upload..."
-    if toUpload and settings.FTP_ADDR:
-        try:
-            print ('Uploading ' + toUpload + '...')
-            ftp = FTP(settings.FTP_ADDR)
-            ftp.login(settings.FTP_ADDR, settings.FTP_PASS)
-            if not 'DotaTools' in ftp.nlst():
-                print 'Folder "DotaTools" not found. Creating...'
-                ftp.mkd('DotaTools')
-            ftp.cwd('DotaTools')
-            file = open('output/' + toUpload, 'r')
-            if settings.DEBUG_MODE is False:
-                ftp.storbinary('STOR %s' % outFile, file)
-            file.close()
-            print 'Uploaded file %s to FTP at %s. Closing connection...\n' % (outFile, settings.FTP_ADDR)
-            ftp.quit()
-        except:
-            print ('Unexpected error!'), sys.exc_info()
-
-
 def main():
     HeroPool = noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
     ToPlay = whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
     writeToFile(ToPlay, outFile)
-    uploadToFTP(outFile)
+    DotaTools.upload(outFile)
 
 if __name__ == "__main__":
     main()

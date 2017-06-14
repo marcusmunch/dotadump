@@ -2,6 +2,7 @@
 from ftplib import FTP
 from random import randint
 
+import DotaTools
 import json
 import os
 import requests
@@ -64,28 +65,6 @@ def writeToFile(output="", outFile=""):
             file.close
         print "Successfully wrote to file!\n"
 
-# Connect to FTP (if specified in settings) and upload file to ./DotaTools/
-def uploadToFTP(toUpload=False):
-    if not settings.FTP_ADDR:
-        print "No FTP settings were found. Skipping upload..."
-    if toUpload and settings.FTP_ADDR:
-        try:
-            print ('Uploading %s...' % toUpload)
-            ftp = FTP(settings.FTP_ADDR)
-            ftp.login(settings.FTP_ADDR, settings.FTP_PASS)
-            if not 'DotaTools' in ftp.nlst():
-                print 'Folder "DotaTools" not found. Creating...'
-                ftp.mkd('DotaTools')
-            ftp.cwd('DotaTools')
-            file = open('output/' + toUpload, 'r')
-            if settings.DEBUG_MODE is False:
-                ftp.storbinary('STOR ' + outFile, file)
-            file.close()
-            print 'Uploaded file to FTP at ' + settings.FTP_ADDR + '. Closing connection...\n'
-            ftp.quit()
-        except:
-            print ('Unexpected error!'), sys.exc_info()
-
 
 def main():
     def mmrNoUpdate():
@@ -97,7 +76,7 @@ def main():
     if not mmrNoUpdate():
         compileOutput(lookup('solo_competitive_rank'))
         writeToFile(output, outFile)
-        uploadToFTP(outFile)
+        DotaTools.upload(outFile)
     else: print (time.strftime('[%d/%m-%y %H:%M]: ') + 'No new MMR. No changes will be written.')
 
 if __name__ == '__main__':
