@@ -41,4 +41,4 @@ def writeToFile(output="", outFile=""):
         print "Successfully wrote to file!\n"
 
 if __name__ == '__main__':
-	print "Whoops!"
+	print "Whoops! This script isn't meant to be run this way - it merely contains some of the functions used by the actual scripts within this folder!"
