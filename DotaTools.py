@@ -3,6 +3,7 @@
 #  http://marcusmunch.github.com
 
 import settings
+import os
 
 def upload(toUpload=False):
     if not settings.FTP_ADDR:
@@ -24,6 +25,20 @@ def upload(toUpload=False):
             ftp.quit()
         except:
             print ('Unexpected error!'), sys.exc_info()
+
+def writeToFile(output="", outFile=""):
+    if outFile == "":
+        print "No output selected - no file written"
+    else:
+        if not os.path.exists('output'):
+            print 'Folder "output" not found. Creating...\n'
+            if settings.DEBUG_MODE is False: os.mkdir('output')
+        print ('Writing to file %s: "%s"' % (outFile, output))
+        if settings.DEBUG_MODE is False:
+            file = open('./output/' + outFile, "w")
+            file.write(output)
+            file.close
+        print "Successfully wrote to file!\n"
 
 if __name__ == '__main__':
 	print "Whoops!"

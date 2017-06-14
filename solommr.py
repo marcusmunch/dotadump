@@ -30,8 +30,10 @@ if settings.DEBUG_MODE == True:
 # Look up basic profile data
 def lookup(param=""):
     if param:
+        print 'Looking up "%s"...' % param
         r = requests.get('https://api.opendota.com/api/players/' + settings.STEAM_ID)
         data = json.loads(r.text)
+        print '%s is currently %s\n' % (param.capitalize(), data[param])
         return data[param]
 
 # Some profile data requires you to look deeper into the profile.
@@ -53,19 +55,6 @@ def compileOutput(result='', outputTime=time.time()):
         data = json.loads(requests.get('https://api.opendota.com/api/players/%s/matches?limit=1&lobby_type=7' % settings.STEAM_ID).text)
         output = 'Solo MMR for player "%s" as of %s: %s' % (profileLookup('personaname'), translateTime(data[0]['start_time'] + data[0]['duration']), result)
 
-# Write the file
-def writeToFile(output="", outFile=""):
-    if outFile == "":
-        print "No output selected - no file written"
-    elif output:
-        print ("Writing to file " + outFile + ': "' + output + '"')
-        if settings.DEBUG_MODE is False:
-            file = open('./output/' + outFile, "w")
-            file.write(output)
-            file.close
-        print "Successfully wrote to file!\n"
-
-
 def main():
     def mmrNoUpdate():
         if not os.path.exists('./output/' + outFile): return False
@@ -75,7 +64,7 @@ def main():
             return True
     if not mmrNoUpdate():
         compileOutput(lookup('solo_competitive_rank'))
-        writeToFile(output, outFile)
+        DotaTools.writeToFile(output, outFile)
         DotaTools.upload(outFile)
     else: print (time.strftime('[%d/%m-%y %H:%M]: ') + 'No new MMR. No changes will be written.')
 

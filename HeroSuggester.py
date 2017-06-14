@@ -82,27 +82,14 @@ def whatToPlay(pickFrom, suggestion_num=3):
             output = leader + ', '.join(challenge) + '.' 
             return output
 
-
-def writeToFile(output="", outFile=""):
-    if outFile == "":
-        print "No output selected - no file written"
-    else:
-        if not os.path.exists('output'):
-            print 'Folder "output" not found. Creating...\n'
-            if settings.DEBUG_MODE is False: os.mkdir('output')
-        print 'Writing to file %s: "%s"' % (outFile, output)
-        if settings.DEBUG_MODE is False:
-            file = open('./output/' + outFile, "w")
-            file.write(output)
-            file.close
-        print "Successfully wrote to file!\n"
-
-
 def main():
     HeroPool = noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
     ToPlay = whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
-    writeToFile(ToPlay, outFile)
+    DotaTools.writeToFile(ToPlay, outFile)
     DotaTools.upload(outFile)
 
 if __name__ == "__main__":
     main()
+
+
+
