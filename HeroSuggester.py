@@ -14,9 +14,11 @@ import settings
 import sys
 import time
 
+
 # Set output filename to be the same at the basename of this script
 base = os.path.basename(__file__)
 outFile = os.path.splitext(base)[0]
+
 
 # Give user warning if Debug Mode is enabled in settings.py
 if settings.DEBUG_MODE == True:
@@ -83,14 +85,13 @@ def whatToPlay(pickFrom, suggestion_num=3):
             output = leader + ', '.join(challenge) + '.' 
             return output
 
+
 def main():
     HeroPool = noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
     ToPlay = whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
     DotaTools.writeToFile(ToPlay, outFile)
     DotaTools.upload(outFile)
 
+
 if __name__ == "__main__":
     main()
-
-
-

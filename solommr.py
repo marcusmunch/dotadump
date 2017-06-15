@@ -14,6 +14,7 @@ import settings
 import sys
 import time
 
+
 # Set output filename to be the same at the basename of this script
 base = os.path.basename(__file__)
 outFile = os.path.splitext(base)[0]
@@ -35,6 +36,7 @@ def lookup(param=""):
         data = json.loads(r.text)
         return data[param]
 
+
 # Some profile data requires you to look deeper into the profile.
 def profileLookup(param=""):
     if param:
@@ -42,9 +44,11 @@ def profileLookup(param=""):
         data = json.loads(r.text)
         return data['profile'][param]
 
+
 # Convert returned number of seconds since Epoch to human-readable time
 def translateTime(inputTime=time.time()):
     return time.strftime('%d/%m %H:%M:%S', time.localtime(int(inputTime)))
+
 
 # Compile the output that will be written to the file
 def compileOutput(result='', outputTime=time.time()):
@@ -53,6 +57,7 @@ def compileOutput(result='', outputTime=time.time()):
     if result:
         data = json.loads(requests.get('https://api.opendota.com/api/players/%s/matches?limit=1&lobby_type=7' % settings.STEAM_ID).text)
         output = 'Solo MMR for player "%s" as of %s: %s' % (profileLookup('personaname'), translateTime(data[0]['start_time'] + data[0]['duration']), result)
+
 
 def main():
     def mmrNoUpdate():
@@ -69,5 +74,7 @@ def main():
         DotaTools.upload(outFile)
     else: print (time.strftime('[%d/%m-%y %H:%M]: ') + 'No new MMR. No changes will be written.')
 
+
 if __name__ == '__main__':
     main()
+    
