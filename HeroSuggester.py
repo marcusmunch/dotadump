@@ -3,7 +3,6 @@
 # DotaTools Hero Suggester, written by MarcusMunch
 # http://github.com/MarcusMunch
 
-from ftplib import FTP
 from random import randint
 
 import DotaTools

@@ -2,6 +2,8 @@
 #  Written by MarcusMunch
 #  http://marcusmunch.github.com
 
+from ftplib import FTP
+
 import settings
 import os
 import sys
