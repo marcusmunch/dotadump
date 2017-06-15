@@ -14,8 +14,9 @@ import time
 # DotaTools Hero Suggester, written by MarcusMunch
 # v1.0
 
-# Edit below line to change name of file being output
-outFile = 'whattoplay.txt'
+# Set output filename to be the same at the basename of this script
+base = os.path.basename(__file__)
+outFile = os.path.splitext(base)[0]
 
 # Give user warning if Debug Mode is enabled in settings.py
 if settings.DEBUG_MODE == True:

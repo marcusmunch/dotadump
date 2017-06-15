@@ -14,8 +14,9 @@ import time
 # Last updated April 13th 2017
 
 
-# Edit below line to change name of file being output
-outFile = 'solommr.txt'
+# Set output filename to be the same at the basename of this script
+base = os.path.basename(__file__)
+outFile = os.path.splitext(base)[0]
 
 
 # Give user warning if Debug Mode is enabled in settings.py
