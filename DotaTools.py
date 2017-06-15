@@ -3,6 +3,7 @@
 #  http://marcusmunch.github.com
 
 from ftplib import FTP
+from time import sleep
 
 import settings
 import os
@@ -44,4 +45,13 @@ def writeToFile(output="", outFile=""):
         print "Successfully wrote to file!\n"
 
 if __name__ == '__main__':
-	print "Whoops! This script isn't meant to be run this way - it merely contains some of the functions used by the actual scripts within this folder!"
+    print " __    __  __ __   ___    ___   ____    _____ __ "
+    print "|  |__|  ||  |  | /   \  /   \ |    \  / ___/|  |"
+    print "|  |  |  ||  |  ||     ||     ||  o  )(   \_ |  |"
+    print "|  |  |  ||  _  ||  O  ||  O  ||   _/  \__  ||__|"
+    print "|  `  '  ||  |  ||     ||     ||  |    /  \ | __ "
+    print " \      / |  |  ||     ||     ||  |    \    ||  |"
+    print "  \_/\_/  |__|__| \___/  \___/ |__|     \___||__|"
+    sleep(1)
+    print "\nThis script isn't meant to be run this way - it merely contains some of the functions used by the actual scripts within this folder!"
+    sleep(5)
