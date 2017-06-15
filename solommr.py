@@ -16,7 +16,7 @@ import time
 
 # Set output filename to be the same at the basename of this script
 base = os.path.basename(__file__)
-outFile = os.path.splitext(base)[0]
+outFile = os.path.splitext(base)[0] + '.txt'
 
 
 # Give user warning if Debug Mode is enabled in settings.py
