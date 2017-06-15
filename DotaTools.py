@@ -4,6 +4,7 @@
 
 import settings
 import os
+import sys
 
 def upload(toUpload=False):
     if not settings.FTP_ADDR:
