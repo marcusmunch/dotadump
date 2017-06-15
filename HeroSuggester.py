@@ -1,4 +1,8 @@
 #!/bin/user/python
+
+# DotaTools Hero Suggester, written by MarcusMunch
+# http://github.com/MarcusMunch
+
 from ftplib import FTP
 from random import randint
 
@@ -9,10 +13,6 @@ import requests
 import settings
 import sys
 import time
-
-
-# DotaTools Hero Suggester, written by MarcusMunch
-# v1.0
 
 # Set output filename to be the same at the basename of this script
 base = os.path.basename(__file__)
