@@ -28,7 +28,7 @@ def matchesToday():
 			if data[match]['start_time'] >= reset_time: output[match] = data[match]
 		else: output[match] = data[match]
 	if output == {}:
-		print 'No games played today!'
+		print 'No games played today!\n'
 	else:
 		identifyHeroes(output)
 	return output
