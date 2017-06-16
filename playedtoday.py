@@ -1,5 +1,6 @@
 import DotaTools
 import json
+import os
 import requests
 import settings
 import time
@@ -7,7 +8,8 @@ import time
 from whattoplay import identifyHeroes
 
 # Edit below line to change name of file being output
-outFile = 'playedtoday.txt'
+base = os.path.basename(__file__)
+outFile = os.path.splitext(base)[0] + '.txt'
 
 
 # get time in secs since epoch for today at 4 AM - hopefully you're not playing Dota this late(!)
