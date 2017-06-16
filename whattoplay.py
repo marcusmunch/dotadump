@@ -19,15 +19,6 @@ base = os.path.basename(__file__)
 outFile = os.path.splitext(base)[0] + '.txt'
 
 
-# Give user warning if Debug Mode is enabled in settings.py
-if settings.DEBUG_MODE == True:
-    try:
-        print ('\n' + '='*(len(settings.DEBUG_MESSAGE)+2))
-        print (' ' + settings.DEBUG_MESSAGE + ' ')
-        print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
-    except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
-
-
 def identifyHeroes(toIdentify=""):
     print "Searching for localized names for found Hero ID's."
     r = requests.get('https://api.opendota.com/api/heroes')

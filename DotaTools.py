@@ -9,6 +9,16 @@ import settings
 import os
 import sys
 
+
+# Give user warning if Debug Mode is enabled in settings.py
+if settings.DEBUG_MODE == True:
+    try:
+        print ('\n' + '='*(len(settings.DEBUG_MESSAGE)+2))
+        print (' ' + settings.DEBUG_MESSAGE + ' ')
+        print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
+    except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
+
+
 def upload(toUpload=False):
     if not settings.FTP_ADDR:
         print "No FTP settings were found. Skipping upload..."
