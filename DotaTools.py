@@ -3,10 +3,21 @@
 #  http://marcusmunch.github.com
 
 from ftplib import FTP
+from time import sleep
 
 import settings
 import os
 import sys
+
+
+# Give user warning if Debug Mode is enabled in settings.py
+if settings.DEBUG_MODE == True:
+    try:
+        print ('\n' + '='*(len(settings.DEBUG_MESSAGE)+2))
+        print (' ' + settings.DEBUG_MESSAGE + ' ')
+        print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
+    except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
+
 
 def upload(toUpload=False):
     if not settings.FTP_ADDR:
@@ -44,4 +55,13 @@ def writeToFile(output="", outFile=""):
         print "Successfully wrote to file!\n"
 
 if __name__ == '__main__':
-	print "Whoops! This script isn't meant to be run this way - it merely contains some of the functions used by the actual scripts within this folder!"
+    print " __    __  __ __   ___    ___   ____    _____ __ "
+    print "|  |__|  ||  |  | /   \  /   \ |    \  / ___/|  |"
+    print "|  |  |  ||  |  ||     ||     ||  o  )(   \_ |  |"
+    print "|  |  |  ||  _  ||  O  ||  O  ||   _/  \__  ||__|"
+    print "|  `  '  ||  |  ||     ||     ||  |    /  \ | __ "
+    print " \      / |  |  ||     ||     ||  |    \    ||  |"
+    print "  \_/\_/  |__|__| \___/  \___/ |__|     \___||__|"
+    sleep(1)
+    print "\nThis script isn't meant to be run this way - it merely contains some of the functions used by the actual scripts within this folder!"
+    sleep(5)
