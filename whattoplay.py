@@ -19,20 +19,6 @@ base = os.path.basename(__file__)
 outFile = os.path.splitext(base)[0] + '.txt'
 
 
-def identifyHeroes(toIdentify=""):
-    print "Searching for localized names for found Hero ID's."
-    r = requests.get('https://api.opendota.com/api/heroes')
-    data = json.loads(r.text)
-    for i in range(0, len(toIdentify)):
-        lookup = int(toIdentify[i]['hero_id'])
-        if lookup < 24:
-            lookup -= 1
-        else:
-            lookup -= 2
-        toIdentify[i]['localized_name'] = data[lookup]['localized_name']
-    return toIdentify
-
-
 def noRecent(minmatches=10, days=60):
     output = []
     print 'Finding heroes not played within the last %s days (minimum of %s games played and minimum win rate of %s%%)...' % (days, minmatches, settings.SUGGEST_MIN_WINRATE)
@@ -78,7 +64,7 @@ def whatToPlay(pickFrom, suggestion_num=3):
 
 def main():
     HeroPool = noRecent(settings.SUGGEST_MIN_GAMES, settings.SUGGEST_MIN_DAYS)
-    ToPlay = whatToPlay(identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
+    ToPlay = whatToPlay(DotaTools.identifyHeroes(HeroPool), settings.SUGGEST_AMOUNT)
     DotaTools.writeToFile(ToPlay, outFile)
     DotaTools.upload(outFile)
 

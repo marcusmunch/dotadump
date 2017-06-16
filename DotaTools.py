@@ -5,6 +5,8 @@
 from ftplib import FTP
 from time import sleep
 
+import json
+import requests
 import settings
 import os
 import sys
@@ -17,6 +19,20 @@ if settings.DEBUG_MODE == True:
         print (' ' + settings.DEBUG_MESSAGE + ' ')
         print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
     except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
+
+
+def identifyHeroes(toIdentify=""):
+    print "Searching for localized names for found Hero ID's...\n"
+    r = requests.get('https://api.opendota.com/api/heroes')
+    data = json.loads(r.text)
+    for i in range(0, len(toIdentify)):
+        lookup = int(toIdentify[i]['hero_id'])
+        if lookup < 24:
+            lookup -= 1
+        else:
+            lookup -= 2
+        toIdentify[i]['localized_name'] = data[lookup]['localized_name']
+    return toIdentify
 
 
 def upload(toUpload=False):

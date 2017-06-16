@@ -5,8 +5,6 @@ import requests
 import settings
 import time
 
-from whattoplay import identifyHeroes
-
 # Edit below line to change name of file being output
 base = os.path.basename(__file__)
 outFile = os.path.splitext(base)[0] + '.txt'
@@ -30,7 +28,7 @@ def matchesToday():
 	if output == {}:
 		print 'No games played today!\n'
 	else:
-		identifyHeroes(output)
+		DotaTools.identifyHeroes(output)
 	return output
 
 
