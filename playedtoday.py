@@ -19,7 +19,7 @@ def setLimit():
 
 
 def matchesToday():
-	r = requests.get("https://api.opendota.com/api/players/%s/matches?date=10" % settings.STEAM_ID)
+	r = requests.get("https://api.opendota.com/api/players/%s/matches?date=1" % settings.STEAM_ID)
 	data = json.loads(r.text)
 	output = {}
 	print 'Getting matches played today...'
@@ -64,7 +64,7 @@ def compileOutput():
 		for item in range(0,len(HeroPool)):
 			output.append('%s (%s %s)' % (HeroPool[item]['localized_name'], identifyLobby(HeroPool[item]), HeroPool[item]['result']))
 		return ('Heroes played today: ' + ', '.join(output) + '.')
-	else: return False
+	else: return 'No games played so far today!'
 
 
 def main():
