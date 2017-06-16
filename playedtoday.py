@@ -42,13 +42,27 @@ def appendResult(input):
 	return input
 
 
+def identifyLobby(match):
+	lobbynum = match['lobby_type']
+	if lobbynum == 0: return 'Unranked'
+	if lobbynum == 1: return 'Practice'
+	if lobbynum == 2: return 'Tournament'
+	if lobbynum == 3: return 'Tutorial'
+	if lobbynum == 4: return 'Co-op with AI'
+	if lobbynum == 5: return 'Team match'
+	if lobbynum == 6: return 'Solo queue'
+	if lobbynum == 7: return 'Ranked'
+	if lobbynum == 8: return '1v1 solo mid'
+	if lobbynum == 9: return 'Seasonal ranked'
+
+
 def compileOutput():
 	HeroPool = matchesToday()
 	if len(HeroPool) > 0:
 		appendResult(HeroPool)
 		output = []
 		for item in range(0,len(HeroPool)):
-			output.append('%s (%s)' % (HeroPool[item]['localized_name'], HeroPool[item]['result']))
+			output.append('%s (%s %s)' % (HeroPool[item]['localized_name'], identifyLobby(HeroPool[item]), HeroPool[item]['result']))
 		return ('Heroes played today: ' + ', '.join(output) + '.')
 	else: return False
 
