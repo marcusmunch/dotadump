@@ -1,6 +1,7 @@
 # DotaTools
 DotaTools is a set of Python scripts that lets you output different information from the OpenDota API to separate files. It requires only little setup (edit details in one(!) file) and no Python skills at all.
 
+
 ### Requirements:
 
 In order to get anything, you must get OpenDota to read your match details. For this, you will need to go into Dota 2's Settings -> Options -> Advanced options -> Social and switch 'Expose Public Match Data' on.
@@ -15,10 +16,13 @@ After this, you will need:
 ## How to set up DotaTools
 Within the main folder you'll find `settings_example.py`. Edit this file with your FTP logon credentials and your settings and remove the `_example` from the file name, giving you `settings.py`. Remember to turn `DEBUG_MODE` off before you start running your scripts if you actually want it to output files!
 
-Now, as of April 20th, DotaTools contains the following scripts:
 
-- `HeroSuggester.py` picks a number of heroes (selected by you) from a number of parameters and picks out three random heroes for you to play. Every time this script is run, it will replace the file on the FTP server, as it is currently designed for a single daily run.
-- Solommr.py fetches your current Solo MMR as of your latest completed ranked game. If there are no changes to the output file, it will not connect to the FTP server and will not try to upload anything.
+Now, as of June 17th 2017, DotaTools contains the following scripts:
+
+-`playedtoday.py` gets a list of your matches played today (after 4AM), including the lobby type (Ranked, Unranked, Solo 1v1 Mid, etc.). (Now that I think of it there might be some bugs. Disregard that for now.)
+- `solommr.py` fetches your current Solo MMR as of your latest completed ranked game. If there are no changes to the output file, it will not connect to the FTP server and will not try to upload anything.
+- `whattoplay.py` picks a number of heroes (selected by you) from a number of parameters and picks out three random heroes for you to play. Every time this script is run, it will replace the file on the FTP server, as it is currently designed for a single daily run.
+
 
 Written by MarcusMunch (http://github.com/MarcusMunch)
 
