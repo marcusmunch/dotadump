@@ -62,12 +62,12 @@ def identifyLobby(match):
 
 
 def compileOutput():
-	HeroPool = matchesToday()
-	if len(HeroPool) > 0:
-		appendResult(HeroPool)
+	pool = matchesToday()
+	if len(pool) > 0:
+		appendResult(pool)
 		output = []
-		for item in range(0,len(HeroPool)):
-			output.append('%s (%s %s) at %s' % (HeroPool[item]['localized_name'], identifyLobby(HeroPool[item]), HeroPool[item]['result'], time.strftime('%H:%M', time.localtime(HeroPool[item]['start_time']))))
+		for i in range(0,len(pool)):
+			output.append('%s (%s %s) at %s' % (pool[i]['localized_name'], identifyLobby(pool[i]), pool[i]['result'], time.strftime('%H:%M', time.localtime(pool[i]['start_time']))))
 		output.reverse()
 		return ('Heroes played today: ' + ', '.join(output) + '.')
 	else: return 'No games played so far today!'
