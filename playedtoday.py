@@ -68,6 +68,7 @@ def compileOutput():
 		output = []
 		for item in range(0,len(HeroPool)):
 			output.append('%s (%s %s)' % (HeroPool[item]['localized_name'], identifyLobby(HeroPool[item]), HeroPool[item]['result']))
+		output.reverse()
 		return ('Heroes played today: ' + ', '.join(output) + '.')
 	else: return 'No games played so far today!'
 
