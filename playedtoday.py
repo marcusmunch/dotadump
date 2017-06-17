@@ -30,7 +30,7 @@ def matchesToday():
 	print 'Getting matches played today...'
 	for match in range(0,len(data)): # This enables debugging by removing games played after reset time
 		if not settings.DEBUG_MODE:
-			if data[match]['start_time'] >= reset: print reset
+			if data[match]['start_time'] >= reset: output[match] = data[match]
 		else: output[match] = data[match]
 	if output == {}:
 		print 'No games played today!\n'
