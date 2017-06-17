@@ -3,6 +3,7 @@ import json
 import os
 import requests
 import settings
+import sys
 import time
 
 # Edit below line to change name of file being output
@@ -11,19 +12,25 @@ outFile = os.path.splitext(base)[0] + '.txt'
 
 
 # get time in secs since epoch for today at 4 AM - hopefully you're not playing Dota this late(!)
-def setLimit():
+def setLimit(format):
 	reset_time = time.mktime((time.localtime()[0], time.localtime()[1], time.localtime()[2], 4, 0, 0, -1, -1, -1))
 	reset_struct = time.localtime(reset_time)
-
+	if format == 'seconds': return reset_time
+	elif format == 'struct': return reset_struct
+	else: 
+		print 'Error in setLimit(format): "format" must be either "seconds" or "struct"!\n'
+		sys.exit()
 
 def matchesToday():
-	r = requests.get("https://api.opendota.com/api/players/%s/matches?date=1" % settings.STEAM_ID)
+	r = requests.get("https://api.opendota.com/api/players/%s/matches?date=10" % settings.STEAM_ID)
 	data = json.loads(r.text)
+	reset = setLimit('seconds')
+	t = setLimit('struct')
 	output = {}
 	print 'Getting matches played today...'
-	for match in range(0,len(data)): # To ensure that we only get matches today and not within 24 hours
-		if 'reset_time' in globals() and not settings.DEBUG_MODE:
-			if data[match]['start_time'] >= reset_time: output[match] = data[match]
+	for match in range(0,len(data)): # This enables debugging by removing games played after reset time
+		if not settings.DEBUG_MODE:
+			if data[match]['start_time'] >= reset: print reset
 		else: output[match] = data[match]
 	if output == {}:
 		print 'No games played today!\n'
