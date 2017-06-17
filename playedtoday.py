@@ -65,11 +65,11 @@ def compileOutput():
 	pool = matchesToday()
 	if len(pool) > 0:
 		appendResult(pool)
-		output = []
+		out = []
 		for i in range(0,len(pool)):
-			output.append('%s (%s %s) at %s' % (pool[i]['localized_name'], identifyLobby(pool[i]), pool[i]['result'], time.strftime('%H:%M', time.localtime(pool[i]['start_time']))))
-		output.reverse()
-		return ('Heroes played today: ' + ', '.join(output) + '.')
+			out.append('%s (%s %s) at %s' % (pool[i]['localized_name'], identifyLobby(pool[i]), pool[i]['result'], time.strftime('%H:%M', time.localtime(pool[i]['start_time']))))
+		out.reverse()
+		return ('Heroes played today: ' + ', '.join(out) + '.')
 	else: return 'No games played so far today!'
 
 
