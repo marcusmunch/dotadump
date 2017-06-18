@@ -58,7 +58,7 @@ def identifyLobby(match):
 	if lobbynum == 6: return 'Solo queue'
 	if lobbynum == 7: return 'Ranked'
 	if lobbynum == 8: return '1v1 solo mid'
-	if lobbynum == 9: return 'Ranked'
+	if lobbynum == 9: return 'Battle Cup'
 
 
 def compileOutput():
