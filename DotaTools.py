@@ -35,6 +35,21 @@ def identifyHeroes(toIdentify=""):
     return toIdentify
 
 
+def gameMode():
+    r = requests.get('https://dota2api.readthedocs.io/en/latest/responses.html', timeout=20)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    section = soup.find(id='game-mode').find('tbody')
+    items = list(section.stripped_strings)
+    keys = []
+    values = []
+    for n in range(0,len(items),2):
+        keys.append(int(items[n]))
+    for n in range(1,len(items),2):
+        values.append(items[n])
+    result = dict(izip(keys, values))
+    return result
+
+
 def upload(toUpload=False):
     if not settings.FTP_ADDR:
         print "No FTP settings were found. Skipping upload..."
