@@ -29,13 +29,11 @@ def identifyHeroes(toIdentify=""):
     print "Searching for localized names for found Hero ID's...\n"
     r = requests.get('https://api.opendota.com/api/heroes')
     data = json.loads(r.text)
-    for i in range(0, len(toIdentify)):
-        lookup = int(toIdentify[i]['hero_id'])
-        if lookup < 24:
-            lookup -= 1
-        else:
-            lookup -= 2
-        toIdentify[i]['localized_name'] = data[lookup]['localized_name']
+    for game in toIdentify:
+        ID = int(game['hero_id'])
+        for hero in data:
+            if hero['id'] == ID:
+                game['localized_name'] = hero['localized_name']
     return toIdentify
 
 
