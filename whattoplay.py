@@ -1,9 +1,7 @@
-#!/bin/user/python
+#!/bin/user/env python
 
 # DotaTools Hero Suggester, written by MarcusMunch
 # http://github.com/MarcusMunch
-
-from random import randint
 
 import DotaTools
 import json
@@ -12,6 +10,8 @@ import requests
 import settings
 import sys
 import time
+
+from random import randint
 
 
 # Set output filename to be the same at the basename of this script

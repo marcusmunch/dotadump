@@ -1,15 +1,19 @@
+#!usr/bin/env python
+
 #  DotaTools main tool
 #  Written by MarcusMunch
 #  http://marcusmunch.github.com
 
-from ftplib import FTP
-from time import sleep
-
 import json
+import os
 import requests
 import settings
-import os
 import sys
+
+from bs4 import BeautifulSoup
+from ftplib import FTP
+from itertools import izip
+from time import sleep
 
 
 # Give user warning if Debug Mode is enabled in settings.py
@@ -69,6 +73,7 @@ def writeToFile(output="", outFile=""):
             file.write(output)
             file.close
         print "Successfully wrote to file!\n"
+
 
 if __name__ == '__main__':
     print " __    __  __ __   ___    ___   ____    _____ __ "

@@ -1,3 +1,5 @@
+#!usr/bin/env python
+
 import DotaTools
 import json
 import os

@@ -1,4 +1,4 @@
-#!/bin/user/python
+#!/bin/user/env python
 
 # DotaTools Solo MMR tracker, written by MarcusMunch
 # http://github.com/MarcusMunch
