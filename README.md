@@ -9,6 +9,7 @@ In order to get anything, you must get OpenDota to read your match details. For 
 After this, you will need:
 
 - Python (2.7), obviously.
+- The Python library BeautifulSoup. Instructions on how to install can be found [here](https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup).
 - ...to log onto OpenDota (regularly*), as it only registers matches played within the last week of your latest login (*: forever if you donate - which you should if you use it so often that this script will be of interest).
 - Your Steam32 ID. This is found as a string of numbers in the link to your profile on OpenDota _OR_ your 'Friend ID' on your profile in the Dota 2 client.
 - Optional: Access to an FTP server in order to upload your generated file(s).

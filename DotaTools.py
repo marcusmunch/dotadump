@@ -11,6 +11,7 @@ import settings
 import os
 import sys
 
+from bs4 import BeautifulSoup
 
 # Give user warning if Debug Mode is enabled in settings.py
 if settings.DEBUG_MODE == True:
