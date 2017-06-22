@@ -9,6 +9,7 @@ In order to get anything, you must get OpenDota to read your match details. For 
 After this, you will need:
 
 - Python (2.7), obviously.
+- The Python library BeautifulSoup. Instructions on how to install can be found [here](https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup).
 - ...to log onto OpenDota (regularly*), as it only registers matches played within the last week of your latest login (*: forever if you donate - which you should if you use it so often that this script will be of interest).
 - Your Steam32 ID. This is found as a string of numbers in the link to your profile on OpenDota _OR_ your 'Friend ID' on your profile in the Dota 2 client.
 - Optional: Access to an FTP server in order to upload your generated file(s).
@@ -24,6 +25,6 @@ Now, as of June 17th 2017, DotaTools contains the following scripts:
 - `whattoplay.py` picks a number of heroes (selected by you) from a number of parameters and picks out three random heroes for you to play. Every time this script is run, it will replace the file on the FTP server, as it is currently designed for a single daily run.
 
 
-Written by MarcusMunch (http://github.com/MarcusMunch)
+Written by [MarcusMunch](http://github.com/MarcusMunch)
 
 Of course, a great big "THANK YOU!" goes out to the guys at [OpenDota](http://www.OpenDota.com) for making the API that's making this whole thing possible! I could literally not have done it without your work! And as I said: Spare them a dollar or five!

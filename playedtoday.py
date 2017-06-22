@@ -65,11 +65,12 @@ def identifyLobby(match):
 
 def compileOutput():
 	pool = matchesToday()
+	mode = DotaTools.gameMode()
 	if len(pool) > 0:
 		appendResult(pool)
 		out = []
 		for i in range(0,len(pool)):
-			out.append('%s (%s %s) at %s' % (pool[i]['localized_name'], identifyLobby(pool[i]), pool[i]['result'], time.strftime('%H:%M', time.localtime(pool[i]['start_time']))))
+			out.append('%s (%s - %s) at %s' % (pool[i]['localized_name'], mode[(pool[i]['game_mode'])], pool[i]['result'], time.strftime('%H:%M', time.localtime(pool[i]['start_time']))))
 		out.reverse()
 		return ('Heroes played today: ' + ', '.join(out) + '.')
 	else: return 'No games played so far today!'
