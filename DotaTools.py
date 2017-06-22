@@ -2,9 +2,6 @@
 #  Written by MarcusMunch
 #  http://marcusmunch.github.com
 
-from ftplib import FTP
-from time import sleep
-
 import json
 import requests
 import settings
@@ -12,6 +9,10 @@ import os
 import sys
 
 from bs4 import BeautifulSoup
+from ftplib import FTP
+from itertools import izip
+from time import sleep
+
 
 # Give user warning if Debug Mode is enabled in settings.py
 if settings.DEBUG_MODE == True:

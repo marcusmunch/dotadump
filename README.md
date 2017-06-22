@@ -25,6 +25,6 @@ Now, as of June 17th 2017, DotaTools contains the following scripts:
 - `whattoplay.py` picks a number of heroes (selected by you) from a number of parameters and picks out three random heroes for you to play. Every time this script is run, it will replace the file on the FTP server, as it is currently designed for a single daily run.
 
 
-Written by MarcusMunch (http://github.com/MarcusMunch)
+Written by [MarcusMunch](http://github.com/MarcusMunch)
 
 Of course, a great big "THANK YOU!" goes out to the guys at [OpenDota](http://www.OpenDota.com) for making the API that's making this whole thing possible! I could literally not have done it without your work! And as I said: Spare them a dollar or five!
