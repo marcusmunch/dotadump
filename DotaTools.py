@@ -13,7 +13,7 @@ import sys
 from bs4 import BeautifulSoup
 from ftplib import FTP
 from itertools import izip
-from time import sleep
+from time import sleep, strftime
 
 
 # Give user warning if Debug Mode is enabled in settings.py
@@ -23,6 +23,10 @@ if settings.DEBUG_MODE == True:
         print (' ' + settings.DEBUG_MESSAGE + ' ')
         print ('='*(len(settings.DEBUG_MESSAGE)+2) + '\n')
     except AttributeError: print ('='*73 + '\nNOTE: No DEBUG_MESSAGE set - please see settings_example.py for reference\n' + '='*73 + '\n')
+
+
+# Print current time for logging purposes.
+print 'Current time is %s.' % strftime('%x %X')
 
 
 def identifyHeroes(toIdentify=""):
