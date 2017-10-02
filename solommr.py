@@ -53,7 +53,7 @@ def main():
     def mmrNoUpdate():
         if not os.path.exists('./output/' + outFile): return False
         oldOutput = open('./output/' + outFile, 'r').read()
-        oldMMR = oldOutput[-len(lookup('solo_competitive_rank')):]
+        oldMMR = oldOutput[-len('%s' % lookup('solo_competitive_rank')):]
         if oldMMR == lookup('solo_competitive_rank'):
             return True
     if not mmrNoUpdate():
